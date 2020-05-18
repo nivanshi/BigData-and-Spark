@@ -1,0 +1,31 @@
+List tables
+>list
+
+create a table
+>create "notefications", "attributes", "metrics"
+
+Put data into a table
+> put "notifications", 1, "attributes:for_user", "Raj"
+
+> put "notifications", 1, "attributes:from_user", "Ravi"
+
+Read the data
+>get "notifications" 1
+
+Delete data
+>delete "notifications", 1, "attributes:for_user"
+
+## Stopping the Service
+$ sudo service zookeeper-server stop
+$ sudo service hbase-thrift stop
+$ sudo service hbase-master stop
+$ sudo-service hbase-regionserver stop
+
+## Removing the Sub-Directories of /hbase
+$ sudo hadoop fs -rm -r /hbase/*
+
+## Starting the Service again
+$ sudo service zookeeper-server start
+$ sudo-service hbase-thrift start
+$ sudo-service hbase-master start
+$ sudo-service hbase-regionserver start

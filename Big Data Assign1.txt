@@ -1,0 +1,221 @@
+BIG DATA- ASSIGNMENT(1)
+Nivanshi Tandon
+PGDDS-(7A)
+
+1.   What is Big Data?
+Ans. "Big data" is a field that treats ways to analyze, systematically extract information from, or otherwise deal with data sets that are too large or complex to be dealt with by traditional data-processing application software.
+
+2.   What is Hadoop?
+Ans. Apache Hadoop is a collection of open-source software utilities that facilitate using a network of many computers to solve problems involving massive amounts of data and computation. It provides a software framework for distributed storage and processing of big data using the MapReduce programming model.
+
+3.   What is OLTP?
+Ans. OLTP (Online Transactional Processing) is a category of data processing that is focused on transaction-oriented tasks. OLTP typically involves inserting, updating, and/or deleting small amounts of data in a database. OLTP mainly deals with large numbers of transactions by a large number of users.
+
+4.   What is OLAP?
+Ans. OLAP (Online Analytical Processing) is the technology behind many Business Intelligence (BI) applications. OLAP is a powerful technology for data discovery, including capabilities for limitless report viewing, complex analytical calculations, and predictive “what if” scenario (budget, forecast) planning.
+
+5.   What is RDBMS?
+Ans. RDBMS. Stands for "Relational Database Management System." An RDBMS is a DBMS designed specifically for relational databases. Therefore, RDBMSes are a subset of DBMSes. A relational database refers to a database that stores data in a structured format, using rows and columns.
+
+6.   What is HDFS?
+Ans. The Hadoop Distributed File System (HDFS) is a distributed file system designed to run on commodity hardware. It has many similarities with existing distributed file systems. However, the differences from other distributed file systems are significant. HDFS is highly fault-tolerant and is designed to be deployed on low-cost hardware. HDFS provides high throughput access to application data and is suitable for applications that have large data sets.
+
+7.   What is MapReduce?
+Ans. MapReduce is a processing technique and a program model for distributed computing based on java. The MapReduce algorithm contains two important tasks, namely Map and Reduce. Map takes a set of data and converts it into another set of data, where individual elements are broken down into tuples (key/value pairs).
+
+8.   What is NameNode?
+Ans. NameNode is the centerpiece of HDFS. NameNode is also known as the Master. NameNode only stores the metadata of HDFS – the directory tree of all files in the file system, and tracks the files across the cluster. NameNode does not store the actual data or the dataset. The data itself is actually stored in the DataNodes
+
+9.   What is DataNode?
+Ans. DataNode is responsible for storing the actual data in HDFS. DataNode is also known as the Slave. NameNode and DataNode are in constant communication. When a DataNode starts up it announce itself to the NameNode along with the list of blocks it is responsible for.
+
+10.  What is SecondaryNameNode?
+Ans. Secondary Namenode is one of the poorly named component in Hadoop. By its name, it gives a sense that its a backup for the Namenode.But in reality its not. Lot of beginners in Hadoop get confused about what exactly SecondaryNamenode does and why its present in HDFS.So in this blog post I try to explain the role of secondary namenode in HDFS.
+
+11.  What is ResourceManager?
+Ans. Resource Manager is the master daemon of Yarn. RM manages the global assignments of resources (CPU and memory) among all the applications. It arbitrates system resources between competing applications. The scheduler is responsible for allocating resources for the application running at the hadoop cluster.
+
+12.  What is NodeManager?
+Ans. The NodeManager runs services to determine the health of the node it is executing on. The services perform checks on the disk as well as any user specified tests. If any health check fails, the NodeManager marks the node as unhealthy and communicates this to the ResourceManager, which then stops assigning containers to the node. Communication of the node status is done as part of the heartbeat between the NodeManager and the ResourceManager. The intervals at which the disk checker and health monitor(described below) run don’t affect the heartbeat intervals. When the heartbeat takes place, the status of both checks is used to determine the health of the node.
+
+13.  What is Distributed File System?
+Ans. Distributed file system (DFS) is a method of storing and accessing files based in a client/server architecture. In a distributed file system, one or more central servers store files that can be accessed, with proper authorization rights, by any number of remote clients in the network.
+
+14.  What is Parallel Processing?
+Ans. Hadoop definitely used parallel computing ability of hadoop plus the distributed file system. You can process these files parallely by placing your files on HDFS and running a MapReduce job. Your processing time theoretically improves by the number of nodes that you have on your cluster.
+
+15.  What is Commodity Hardware?
+Ans. Hadoop does not require a very high-end server with large memory and processing power. Due to this we can use any inexpensive system with average RAM and processor. Such kind of system is called commodity hardware.
+
+16.  What is a process?
+Ans. Hadoop does distributed processing for huge data sets across the cluster of commodity servers and works on multiple machines simultaneously. To process any data, the client submits data and program to Hadoop. HDFS stores the data while MapReduce process the data and Yarn divide the tasks
+
+17.  What is a daemon?
+Ans. Daemons in computing terms is a process that runs in the background. Hadoop has five such daemons. They are NameNode, Secondary NameNode, DataNode, JobTracker and TaskTracker. Each daemons runs separately in its own JVM.
+
+18.  What is a service?
+Ans. Hadoop as a service (HaaS), also known as Hadoop in the cloud, is a big data analytics framework that stores and analyzes data in the cloud using Hadoop. Users do not have to invest in or install additional infrastructure on premises when using the technology, as HaaS is provided and managed by a third-party vendor.
+
+19.  What is a Mapper?
+Ans  Mapper is a function which process the input data. The mapper processes the data and creates several small chunks of data. The input to the mapper function is in the form of (key, value) pairs, even though the input to a MapReduce program is a file or directory (which is stored in the HDFS).
+
+20.  What is a Reducer?
+Ans  In Hadoop, Reducer takes the output of the Mapper (intermediate key-value pair) process each of them to generate the output. The output of the reducer is the final output, which is stored in HDFS. Usually, in the Hadoop Reducer, we do aggregation or summation sort of computation.
+
+21.  What is map?
+Ans  This is the very first phase in the execution of map-reduce program. In this phase data in each split is passed to a mapping function to produce output values. In our example, a job of mapping phase is to count a number of occurrences of each word from input splits (more details about input-split is given below) and prepare a list in the form of <word, frequency>
+
+22.  What is reduce?
+Ans. In this phase, output values from the Shuffling phase are aggregated. This phase combines values from Shuffling phase and returns a single output value. In short, this phase summarizes the complete dataset.
+
+23.  What is InputSplit?
+Ans. An input to a MapReduce job is divided into fixed-size pieces called input splits Input split is a chunk of the input that is consumed by a single map
+
+24.  What are map intermediate results?
+Ans. Map output is intermediate output which is processed by reduce tasks to produce the final output. 
+    -Once the job is complete, the map output can be thrown away. So, storing it in HDFS with replication becomes overkill.
+    -In the event of node failure, before the map output is consumed by the reduce task, Hadoop reruns the map task on another node and re-creates the map output.
+    -Reduce task doesn't work on the concept of data locality. An output of every map task is fed to the reduce task. Map output is transferred to the machine where reduce task is running.
+    -On this machine, the output is merged and then passed to the user-defined reduce function.
+    -Unlike the map output, reduce output is stored in HDFS (the first replica is stored on the local node and other replicas are stored on off-rack nodes). So, writing the reduce output
+25.  What is shuffle and sort?
+Ans. This phase consumes the output of Mapping phase. Its task is to consolidate the relevant records from Mapping phase output. In our example, the same words are clubed together along with their respective frequency.
+
+26.  What are the components of Resource manager?
+Ans. The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global ResourceManager (RM) and per-application ApplicationMaster (AM). An application is either a single job or a DAG of jobs.
+The ResourceManager and the NodeManager form the data-computation framework. The ResourceManager is the ultimate authority that arbitrates resources among all the applications in the system. The NodeManager is the per-machine framework agent who is responsible for containers, monitoring their resource usage (cpu, memory, disk, network) and reporting the same to the ResourceManager/Scheduler.
+The per-application ApplicationMaster is, in effect, a framework specific library and is tasked with negotiating resources from the ResourceManager and working with the NodeManager(s) to execute and monitor the tasks.
+
+27.  What is Application Master?
+Ans. The Application Master is responsible for the execution of a single application. It asks for containers from the Resource Scheduler (Resource Manager) and executes specific programs (e.g., the main of a Java class) on the obtained containers. The Resource Manager is a single point of failure in YARN.
+
+28.  What is a container?
+Ans. In Hadoop 2.x, Container is a place where a unit of work occurs. For instance each MapReduce task(not the entire job) runs in one container. An application/job will run on one or more containers. ... Each node in a Hadoop cluster can run several containers.
+
+29.  What is a task?
+Ans. A job is run by being broken down into pieces, known as tasks . These tasks are scheduled to run on the nodes in the cluster where the data exists. Applications submit jobs to a specific node in a Hadoop cluster, which is running a program known as the JobTracker .
+
+30.  What is a job in YARN?
+Ans. The fundamental idea of YARN is to split up the functionalities of resource management and job scheduling/monitoring into separate daemons. The idea is to have a global ResourceManager (RM) and per-application ApplicationMaster (AM). An application is either a single job or a DAG of jobs.
+
+31.  What is HQL?
+Ans. Hive defines a simple SQL-like query language to querying and managing large datasets called Hive-QL ( HQL ). It's easy to use if you're familiar with SQL Language. Hive allows programmers who are familiar with the language to write the custom MapReduce framework to perform more sophisticated analysis.
+
+32.  What are managed and external tables in hive?
+Ans. Managed table and External table in Hive
+There are two types of tables in Hive ,one is Managed table and second is external table.
+the difference is , when you drop a table, if it is managed table hive deletes both data and meta data,if it is external table Hive only deletes metadata.
+
+33.  What are map side joins?
+Ans  by default It is Managed table .
+If you want to create a external table ,you will use external keyword.
+
+for example assume you have emp.csv file under directory /data/employee
+
+to create a managed table we use normal syntax like below
+
+create table managedemp(col1 datatype,col2 datatype, ....) row format delimited fields terminated by 'delimiter character'
+location '/data/employee'
+
+but to create external table ,we use external keyword like below
+
+create external table managedemp(col1 datatype,col2 datatype, ....) row format delimited fields terminated by 'delimiter character'
+location '/data/employee'
+
+34.  What are the different modes of execution in hive?
+Ans  1. Local Mode or Standalone Mode
+Standalone mode is the default mode in which Hadoop run. Standalone mode is mainly used for debugging where you don’t really use HDFS.
+You can use input and output both as a local file system in standalone mode.
+
+You also don’t need to do any custom configuration in the files- mapred-site.xml, core-site.xml, hdfs-site.xml.
+
+Standalone mode is usually the fastest Hadoop modes as it uses the local file system for all the input and output. Here is the summarized view of the standalone mode-
+
+• Used for debugging purpose
+• HDFS is not being used
+• Uses local file system for input and output
+• No need to change any configuration files
+• Default Hadoop Modes
+
+2. Pseudo-distributed Mode
+The pseudo-distribute mode is also known as a single-node cluster where both NameNode and DataNode will reside on the same machine.
+
+In pseudo-distributed mode, all the Hadoop daemons will be running on a single node. Such configuration is mainly used while testing when we don’t need to think about the resources and other users sharing the resource.
+
+In this architecture, a separate JVM is spawned for every Hadoop components as they could communicate across network sockets, effectively producing a fully functioning and optimized mini-cluster on a single host.
+
+Here is the summarized view of pseudo distributed Mode-
+
+• Single Node Hadoop deployment running on Hadoop is considered as pseudo distributed mode
+• All the master & slave daemons will be running on the same node
+• Mainly used for testing purpose
+• Replication Factor will be ONE for blocks
+• Changes in configuration files will be required for all the three files- mapred-site.xml, core-site.xml, hdfs-site.xml
+
+3. Fully-Distributed Mode (Multi-Node Cluster)
+This is the production mode of Hadoop where multiple nodes will be running. Here data will be distributed across several nodes and processing will be done on each node.
+
+Master and Slave services will be running on the separate nodes in fully-distributed Hadoop Mode.
+
+• Production phase of Hadoop
+• Separate nodes for master and slave daemons
+• Data are used and distributed across multiple nodes
+
+35.  What is UTDF’s in hive?
+Ans  Basically, we can use two different interfaces for writing Apache Hive User Defined Functions.
+Simple API
+Complex API
+As long as our function reads and returns primitive types, we can use the simple API (org.apache.hadoop.hive.ql.exec.UDF). In other words, it means basic Hadoop & Hive writable types. Such as Text, IntWritable, LongWritable, DoubleWritable, etc.
+
+36.  Which command would you use to alter the hive configuration parameters
+Ans  The hiveconf namespace and --hiveconf should be used to set Hive configuration values.
+The hivevar namespace and --hivevar should be used to define user variables.
+Set command is used to put configuration values.
+Setting user variables under the hiveconf namespace probably won't break anything, but isn't recommended.
+
+37.  What are the different ways of creating tables and loading data
+Ans  hdfs dfs -put - simple way to insert files from local file system to HDFS
+     HDFS Java API
+     Sqoop - for bringing data to/from databases
+     Flume - streaming files, logs
+     Kafka - distributed queue, mostly for near-real time stream processing
+     Nifi - incubating project at Apache for moving data into HDFS without making lots of changes
+
+38.  What are the 2 types of partitioning in hive?
+Ans  (i)Hive Static Partitioning
+Insert input data files individually into a partition table is Static Partition.
+Usually when loading files (big files) into Hive tables static partitions are preferred.
+Static Partition saves your time in loading data compared to dynamic partition.
+You “statically” add a partition in the table and move the file into the partition of the table.
+We can alter the partition in the static partition.
+You can get the partition column value from the filename, day of date etc without reading the whole big file.
+If you want to use the Static partition in the hive you should set property set hive.mapred.mode = strict This property set by default in hive-site.xml
+Static partition is in Strict Mode.
+You should use where clause to use limit in the static partition.
+You can perform Static partition on Hive Manage table or external table.
+
+(ii.) Hive Dynamic Partitioning
+Single insert to partition table is known as a dynamic partition.
+Usually, dynamic partition loads the data from the non-partitioned table.
+Dynamic Partition takes more time in loading data compared to static partition.
+When you have large data stored in a table then the Dynamic partition is suitable.
+
+39.  How to extract hive data into a directory?
+Ans Step 1: Create Output directory
+    Step 2: Go to hive CLI and execute the following code:
+            INSERT OVERWRITE LOCAL DIRECTORY '/root/local_bdp/posts/export-hive-data-into-file/output'
+            ROW FORMAT DELIMITED
+            FIELDS TERMINATED BY ':'
+            SELECT * FROM bdp.infostore;
+    Step 3: Output:
+            Verify the file which is generated in ‘/root/local_bdp/posts/export-hive-data-into-file/output’ directory.
+
+    Go to the directory via WinSCP and see the content, it should be delimited by a colon.
+
+40.  What is hive metastore?
+Ans  Metastore is the central repository of Apache Hive metadata. It stores metadata for Hive tables (like their schema and location) and partitions in a relational database. It provides client access to this information by using metastore service API.
+Hive metastore consists of two fundamental units:
+
+A service that provides metastore access to other Apache Hive services.
+Disk storage for the Hive metadata which is separate from HDFS storage.
+

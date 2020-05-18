@@ -1,0 +1,1366 @@
+mongo
+> use manipaldatabase
+switched to db manipaldatabase
+> db.createCollection("Students")
+{ "ok" : 1 }
+> db.createCollection("Teachers")
+{ "ok" : 1 }
+> show collections
+Students
+Teachers
+> show database
+2020-01-16T10:37:48.057+0530 E QUERY    [js] Error: don't know how to show [database] :
+shellHelper.show@src/mongo/shell/utils.js:1111:11
+shellHelper@src/mongo/shell/utils.js:766:15
+@(shellhelp2):1:1
+> show dbs
+admin            0.000GB
+config           0.000GB
+local            0.000GB
+manipaldatabase  0.000GB
+> db.Students.drop()
+true
+> show collections
+Teachers
+> show dbs
+admin            0.000GB
+config           0.000GB
+local            0.000GB
+manipaldatabase  0.000GB
+> db.dropDatabase()
+{ "dropped" : "manipaldatabase", "ok" : 1 }
+>
+> use movies
+switched to db movies
+> db.createCollection("movie")
+{ "ok" : 1 }
+>> db.getName()
+movies
+----------------------------------------------------------------------------------------------------------------------------
+INSERT ONE DOCUMENT
+
+> db.movie.insert({"name":"Badal","tags":["comedy","drama","action"]})
+WriteResult({ "nInserted" : 1 })
+----------------------------------------------------------------------------------------------------------------------------
+
+INSERT MULTIPLE DOCUMENT
+
+> db.movie.insert([{"name":"KKDH","tags":["musical","drama"],"year":1996},
+... {"name":"Angoor","tags":"comedy","year":2000},
+... {"name":"MI","tags":"adventure","year":1998}])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 3,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "name" : "Badal", "tags" : [ "comedy", "drama", "action" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+> db.movie.find().pretty()
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "name" : "Badal",
+        "tags" : [
+                "comedy",
+                "drama",
+                "action"
+        ]
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834747"),
+        "name" : "KKDH",
+        "tags" : [
+                "musical",
+                "drama"
+        ],
+        "year" : 1996
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834748"),
+        "name" : "Angoor",
+        "tags" : "comedy",
+        "year" : 2000
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834749"),
+        "name" : "MI",
+        "tags" : "adventure",
+        "year" : 1998
+
+> db.movie.findOne()-> first one
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "name" : "Badal",
+        "tags" : [
+                "comedy",
+                "drama",
+                "action"
+        ]
+}
+}
+
+> db.movie.save({"id":ObjectId("5e1ff8a2a84c360395834746"),"title":"ajooba","tags":["historical"],"year":2007})
+WriteResult({ "nInserted" : 1 })
+
+
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "name" : "Badal", "tags" : [ "comedy", "drama", "action" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+> db.movie.save({"_id":ObjectId("5e1ff8a2a84c360395834746"),"title":"ajooba","tags":["historical"],"year":2007})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.movie.findOne()
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+
+>  db.movie.save({"_id":ObjectId("5e1ff8a2a84c360395834752"),"title":"ajooba","tags":["historical"],"year":2007})
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 1,
+        "nModified" : 0,
+        "_id" : ObjectId("5e1ff8a2a84c360395834752")
+})
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+
+QUERY
+
+> db.movie.find> db.movie.find({"year":1996})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+> db.movie.find().pretty({"name":"Angoor"})
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834747"),
+        "name" : "KKDH",
+        "tags" : [
+                "musical",
+                "drama"
+        ],
+        "year" : 1996
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834748"),
+        "name" : "Angoor",
+        "tags" : "comedy",
+        "year" : 2000
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834749"),
+        "name" : "MI",
+        "tags" : "adventure",
+        "year" : 1998
+}
+{
+        "_id" : ObjectId("5e1ffedfa84c36039583474a"),
+        "id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e2000cda84c36039583474b"),
+        "id" : ObjectId("5e1ff8a2a84c360395834752"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834752"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+> db.movie.find({"year":{$lt:1996}}).pretty()
+> db.movie.find({"
+2020-01-16T12:00:53.343+0530 E QUERY    [js] SyntaxError: unterminated string literal @(shell):1:15
+> db.movie.find({"year":{$gte:1996}}).pretty()
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834747"),
+        "name" : "KKDH",
+        "tags" : [
+                "musical",
+                "drama"
+        ],
+        "year" : 1996
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834748"),
+        "name" : "Angoor",
+        "tags" : "comedy",
+        "year" : 2000
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834749"),
+        "name" : "MI",
+        "tags" : "adventure",
+        "year" : 1998
+}
+{
+        "_id" : ObjectId("5e1ffedfa84c36039583474a"),
+        "id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e2000cda84c36039583474b"),
+        "id" : ObjectId("5e1ff8a2a84c360395834752"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834752"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+>> db.movie.find({"year":{$gt:1996}}).pretty()
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834748"),
+        "name" : "Angoor",
+        "tags" : "comedy",
+        "year" : 2000
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834749"),
+        "name" : "MI",
+        "tags" : "adventure",
+        "year" : 1998
+}
+{
+        "_id" : ObjectId("5e1ffedfa84c36039583474a"),
+        "id" : ObjectId("5e1ff8a2a84c360395834746"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e2000cda84c36039583474b"),
+        "id" : ObjectId("5e1ff8a2a84c360395834752"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+{
+        "_id" : ObjectId("5e1ff8a2a84c360395834752"),
+        "title" : "ajooba",
+        "tags" : [
+                "historical"
+        ],
+        "year" : 2007
+}
+> db.movie.find({"year":{$ne:1996}})
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+
+> db.movie.find({"year":{$gte:1990,$lt:2000}})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+
+  db.movie.find({"year":{$gte:1990,$lt:2000}}).pretty()
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834747"),
+        "name" : "KKDH",
+        "tags" : [
+                "musical",
+                "drama"
+        ],
+        "year" : 1996
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834749"),
+        "name" : "MI",
+        "tags" : "adventure",
+        "year" : 1998
+}
+
+> db.movie.find({
+... $or:[
+... {"year":{$ne:1990}},
+... {"tags":"comedy"}
+... ]})
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+
+> db.movie.find({"year":{$ne:1996}, $or:[ {"name":"MI"}, {"tags":"comedy"}]})
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+
+> db.movie.find({"tags":{$in:["comedy","drama"]}})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+
+> db.movie.find({"name":/^A/})
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+
+> db.movie.find({"title":{$exists:false}})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+
+>  db.movie.find({"title":{$exists:true}})
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+
+> db.movie.find({"year":{$exists:true}})
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1996 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "MI", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+
+> db.movie.find({"year":{$exists:false}})- all the documents contain year
+> db.movie.insert({"name":"james bond","tags":"action"})
+WriteResult({ "nInserted" : 1 }
+> db.movie.find({"year":{$exists:false}})
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "tags" : "action" }
+
+> db.movie.update({"name":"MI"},{$set:{"name":"Mission Impossible"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find({"name":"Mission Impossible"})
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "tags" : "adventure", "year" : 1998 }
+>> db.movie.update({"name":"ajooba"},{$set:{"year":1980}})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.movie.update({"name":"KKDH"},{$set:{"year":1976}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1976 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "tags" : "action" }
+> db.movie.update({"title":"ajooba"},{$set:{"year":1956}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 1956 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1976 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "tags" : "adventure", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "tags" : "action" }
+>> db.movie.updateMany({},{$set:{"language":"Hindi"}})
+{ "acknowledged" : true, "matchedCount" : 8, "modifiedCount" : 8 }
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 1956, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1976, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "tags" : "adventure", "year" : 1998, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007, "language" : "Hindi" }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007, "language" : "Hindi" }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "tags" : "action", "language" : "Hindi" }
+>> db.movie.updateMany({},{$set:{"language":"Hindi"}})
+{ "acknowledged" : true, "matchedCount" : 8, "modifiedCount" : 8 }
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 1956, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "tags" : [ "musical", "drama" ], "year" : 1976, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "tags" : "comedy", "year" : 2000, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "tags" : "adventure", "year" : 1998, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007, "language" : "Hindi" }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007, "language" : "Hindi" }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "tags" : [ "historical" ], "year" : 2007, "language" : "Hindi" }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "tags" : "action", "language" : "Hindi" }
+>> db.movie.updateMany({},{$rename:{"tags":"tage"}})
+{ "acknowledged" : true, "matchedCount" : 8, "modifiedCount" : 8 }
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "year" : 1956, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure" }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "year" : 2007, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "year" : 2007, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "year" : 2007, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action" }
+
+> db.movie.update({},{$unset:{"language":""}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find()
+{ "_id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "year" : 1956, "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure" }
+{ "_id" : ObjectId("5e1ffedfa84c36039583474a"), "id" : ObjectId("5e1ff8a2a84c360395834746"), "title" : "ajooba", "year" : 2007, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e2000cda84c36039583474b"), "id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "year" : 2007, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e1ff8a2a84c360395834752"), "title" : "ajooba", "year" : 2007, "language" : "Hindi", "tage" : [ "historical" ] }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action" }
+
+> db.movie.remove({"title":"ajooba"})
+WriteResult({ "nRemoved" : 4 })
+> db.movie.find()
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure" }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action" }
+
+> db.movie.find({},{"title":1,"name":1})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible" }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond" }
+> db.movie.find({},{"_id":0,"title":1,"name":1})
+{ "name" : "KKDH" }
+{ "name" : "Angoor" }
+{ "name" : "Mission Impossible" }
+{ "name" : "james bond" }
+> db.movie.find({},{"_id":0,"year":0})
+{ "name" : "KKDH", "language" : "Hindi", "tage" : [ "musical", "drama" ] }
+{ "name" : "Angoor", "language" : "Hindi", "tage" : "comedy" }
+{ "name" : "Mission Impossible", "language" : "Hindi", "tage" : "adventure" }
+{ "name" : "james bond", "language" : "Hindi", "tage" : "action" }
+
+> outputf={"_id":0,"year":1}
+{ "_id" : 0, "year" : 1 }
+> db.movie.find({},outputf)
+{ "year" : 1976 }
+{ "year" : 2000 }
+{ "year" : 1998 }
+
+> db.movie.find({"tage":"comedy"})
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+> db.movie.find({},{"_id":0,"tage":1})
+{ "tage" : [ "musical", "drama" ] }
+{ "tage" : "comedy" }
+{ "tage" : "adventure" }
+{ "tage" : "action" }
+
+list only "tags" field from collection movies that were released after year 2000
+> db.movie.find({"year":{$gte:2000}},{"_id" :0,"tage":1})
+{ "tage" : "comedy" }
+
+List the "year" for documents which do not have "title" field
+
+> db.movie.find({"title":{$exists:false}},{"year":1})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "year" : 1976 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "year" : 2000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "year" : 1998 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c") }
+
+> db.movie.find({"year":{$ne:null}})
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure" }
+
+> db.movie.find().limit(3).skip(1)
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure" }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action" }
+
+Second record
+>> db.movie.find().skip(1).limit(1)
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" } 
+
+Ascending order of the year
+> db.movie.find().sort({"year":1})
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ] }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy" }
+
+dislay name,title and year and sort in asc order on the basis of year
+> db.movie.find({},{"name":1,"_id":1,"year":1}).sort({"year":1})
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond" }
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000 
+
+Group by
+
+> db.movie.aggregate([{$group:{_id:"$year",title:{$max:"$name"}}}])
+{ "_id" : 1998, "title" : "Mission Impossible" }
+{ "_id" : 2000, "title" : "Angoor" }
+{ "_id" : null, "title" : "james bond" }
+{ "_id" : 1976, "title" : "KKDH" }
+
+> db.movie.aggregate([{$group:{_id:"$year",movie:{$max:"$name"}}}])
+{ "_id" : 1998, "movie" : "Mission Impossible" }
+{ "_id" : 2000, "movie" : "Angoor" }
+{ "_id" : null, "movie" : "james bond" }
+{ "_id" : 1976, "movie" : "KKDH" }
+> db.movie.aggregate([{$group:{_id:"$year",movie:{$max:"$name"}}}])
+{ "_id" : 1998, "movie" : "Mission Impossible" }
+{ "_id" : 2000, "movie" : "Angoor" }
+{ "_id" : null, "movie" : "james bond" }
+{ "_id" : 1976, "movie" : "KKDH" }
+
+> db.movie.updateMany({},{$set:{"revenue":3000}})
+{ "acknowledged" : true, "matchedCount" : 4, "modifiedCount" : 4 }
+> db.movie.find()
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ], "revenue" : 3000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy", "revenue" : 3000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure", "revenue" : 3000 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action", "revenue" : 3000 }
+
+> db.movie.update({"name":"Mission Impossible"},{$set:{"revenue":5000}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.movie.update({"tage":"comedy"},{$set:{"revenue":7000}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.movie.find()
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ], "revenue" : 3000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy", "revenue" : 7000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure", "revenue" : 5000 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action", "revenue" : 3000 }
+
+SUM
+> db.movie.aggregate([{$group:{_id:"$year",movie:{$sum:"$revenue"}}}])
+{ "_id" : 1998, "movie" : 5000 }
+{ "_id" : 2000, "movie" : 7000 }
+{ "_id" : null, "movie" : 3000 }
+{ "_id" : 1976, "movie" : 3000 }
+
+AVERAGE
+> db.movie.aggregate([{$group:{_id:"$year",movie:{$avg:"$revenue"}}}])
+{ "_id" : 1998, "movie" : 5000 }
+{ "_id" : 2000, "movie" : 7000 }
+{ "_id" : null, "movie" : 3000 }
+{ "_id" : 1976, "movie" : 3000 }
+
+Count the number of movies counted per year
+> db.movie.aggregate([{$group:{_id:"$year",movie:{$sum:1}}}])
+{ "_id" : 1998, "movie" : 1 }
+{ "_id" : 2000, "movie" : 1 }
+{ "_id" : null, "movie" : 1 }
+{ "_id" : 1976, "movie" : 1 }
+
+Groupby
+
+> db.movie.aggregate([{$group:{_id:"",movie:{$max:"$revenue"}}}])
+{ "_id" : "", "movie" : 7000 }
+
+> db.movie.aggregate([{$group:{_id:"",movie:{$sum:1}}}])
+{ "_id" : "", "movie" : 4 }
+
+Aggregate(Pipeline and options)
+
+Groupby and Sort
+
+> db.movie.aggregate([{$group:{_id:"",movie:{$max:"$revenue"}}},{$sort:{"_id":1}}])
+{ "_id" : "", "movie" : 7000 }
+
+How to sort the agg data?
+> db.movie.aggregate([{$group:{_id:"",movie:{$sum:1}}},{$sort:{"_id":1}}])
+{ "_id" : "", "movie" : 4 }
+
+How to apply agg on entire collection
+> db.movie.aggregate([{$group:{_id:null,movie:{$sum:1}}}])
+{ "_id" : null, "movie" : 4 }
+
+HOMEWORK
+
+1.a.
+
+> db.movie.insert({"name":"Charlie","tags":["comedy","drama"],language:"English",year:1960})
+WriteResult({ "nInserted" : 1 })
+> db.movie.find()
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ], "revenue" : 3000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy", "revenue" : 7000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure", "revenue" : 5000 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action", "revenue" : 3000 }
+{ "_id" : ObjectId("5e208860a84c36039583474d"), "name" : "Charlie", "tags" : [ "comedy", "drama" ], "language" : "English", "year" : 1960 }
+
+1.b.> db.movie.update({"name":"Charlie"},{$set:{"year":1962}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.movie.find()
+{ "_id" : ObjectId("5e1ffa60a84c360395834747"), "name" : "KKDH", "year" : 1976, "language" : "Hindi", "tage" : [ "musical", "drama" ], "revenue" : 3000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy", "revenue" : 7000 }
+{ "_id" : ObjectId("5e1ffa60a84c360395834749"), "name" : "Mission Impossible", "year" : 1998, "language" : "Hindi", "tage" : "adventure", "revenue" : 5000 }
+{ "_id" : ObjectId("5e200f3aa84c36039583474c"), "name" : "james bond", "language" : "Hindi", "tage" : "action", "revenue" : 3000 }
+{ "_id" : ObjectId("5e208860a84c36039583474d"), "name" : "Charlie", "tags" : [ "comedy", "drama" ], "language" : "English", "year" : 1962 }
+
+2.a.> db.movie.find().pretty()
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834747"),
+        "name" : "KKDH",
+        "year" : 1976,
+        "language" : "Hindi",
+        "tage" : [
+                "musical",
+                "drama"
+        ],
+        "revenue" : 3000
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834748"),
+        "name" : "Angoor",
+        "year" : 2000,
+        "language" : "Hindi",
+        "tage" : "comedy",
+        "revenue" : 7000
+}
+{
+        "_id" : ObjectId("5e1ffa60a84c360395834749"),
+        "name" : "Mission Impossible",
+        "year" : 1998,
+        "language" : "Hindi",
+        "tage" : "adventure",
+        "revenue" : 5000
+}
+{
+        "_id" : ObjectId("5e200f3aa84c36039583474c"),
+        "name" : "james bond",
+        "language" : "Hindi",
+        "tage" : "action",
+        "revenue" : 3000
+}
+{
+        "_id" : ObjectId("5e208860a84c36039583474d"),
+        "name" : "Charlie",
+        "tags" : [
+                "comedy",
+                "drama"
+        ],
+        "language" : "English",
+        "year" : 1962
+}
+
+3.> db.movie.find({"year":{$gte:2000}})
+{ "_id" : ObjectId("5e1ffa60a84c360395834748"), "name" : "Angoor", "year" : 2000, "language" : "Hindi", "tage" : "comedy", "revenue" : 7000 }
+
+4.> db.movie.find({"tage":"comedy"},{"_id":0,"name":1})
+{ "name" : "Angoor" }
+
+3.> db.movie.find({"year":{$gte:2000}},{"_id":0,"name":1})
+{ "name" : "Angoor" }
+
+5.> db.movie.find({"year":{$lt:2000},"language":"Hindi"},{"_id":0,"name":1})
+{ "name" : "KKDH" }
+{ "name" : "Mission Impossible" }
+{ "name" : "Charlie" 
+
+
+DAY-2
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+movies  0.000GB
+> use movies
+switched to db movies
+> show collections
+movie
+
+Q1 ensureIndex have to make the index naturally
+
+ensureIndex() method will create the index on the specified field
+accending order: 1
+desc order:-1
+index can be created on multiple fields
+
+}> db.movie.ensureIndex({"name":1})
+{
+        "numIndexesBefore" : 2,
+        "numIndexesAfter" : 2,
+        "note" : "all indexes already exist",
+        "ok" : 1
+
+EXPLAIN - PATH VARIABLE
+
+db.movie.find({"tage":"comedy"},{"_id":0,"name":1}).explain()
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "movies.movie",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "tage" : {
+                                "$eq" : "comedy"
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "PROJECTION",
+                        "transformBy" : {
+                                "_id" : 0,
+                                "name" : 1
+                        },
+                        "inputStage" : {
+                                "stage" : "COLLSCAN",
+                                "filter" : {
+                                        "tage" : {
+                                                "$eq" : "comedy"
+                                        }
+                                },
+                                "direction" : "forward"
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "DS-0001",
+                "port" : 27017,
+                "version" : "4.0.14",
+                "gitVersion" : "1622021384533dade8b3c89ed3ecd80e1142c132"
+        },
+        "ok" : 1
+}
+> db.movie.find({"name":"KKDH"},{"_id":0,"name":1}).explain()
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "movies.movie",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "name" : {
+                                "$eq" : "KKDH"
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "PROJECTION",
+                        "transformBy" : {
+                                "_id" : 0,
+                                "name" : 1
+                        },
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "name" : 1
+                                },
+                                "indexName" : "name_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "name" : [ ]
+                                },
+                                "isUnique" : false,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "name" : [
+                                                "[\"KKDH\", \"KKDH\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "DS-0001",
+                "port" : 27017,
+                "version" : "4.0.14",
+                "gitVersion" : "1622021384533dade8b3c89ed3ecd80e1142c132"
+        },
+        "ok" : 1
+
+
+JSON JAVASCRIPT OBJECT NOTATION(LOADING JSON FILE INTO MONGO DB)
+
+-File format
+-It is a lightweight
+-Python diction
+
+> use getName
+switched to db getName
+> db.getName()
+getName
+> db.getName
+function () {
+        return this._name;
+    }
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+movies  0.000GB
+> use movies
+switched to db movies
+> db.getName()
+movies
+> load("loadMovieDetailsDataset.js")
+true
+> show collections
+movieDetails
+
+> db.movieDetails.findOne()
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2cf"),
+        "title" : "Once Upon a Time in the West",
+        "year" : 1968,
+        "rated" : "PG-13",
+        "runtime" : 175,
+        "countries" : [
+                "Italy",
+                "USA",
+                "Spain"
+        ],
+        "genres" : [
+                "Western"
+        ],
+        "director" : "Sergio Leone",
+        "writers" : [
+                "Sergio Donati",
+                "Sergio Leone",
+                "Dario Argento",
+                "Bernardo Bertolucci",
+                "Sergio Leone"
+        ],
+        "actors" : [
+                "Claudia Cardinale",
+                "Henry Fonda",
+                "Jason Robards",
+                "Charles Bronson"
+        ],
+        "plot" : "Epic story of a mysterious stranger with a harmonica who joins forces with a notorious desperado to protect a beautiful widow from a ruthless assassin working for the railroad.",
+        "poster" : "http://ia.media-imdb.com/images/M/MV5BMTEyODQzNDkzNjVeQTJeQWpwZ15BbWU4MDgyODk1NDEx._V1_SX300.jpg",
+        "imdb" : {
+                "id" : "tt0064116",
+                "rating" : 8.6,
+                "votes" : 201283
+        },
+        "tomato" : {
+                "meter" : 98,
+                "image" : "certified",
+                "rating" : 9,
+                "reviews" : 54,
+                "fresh" : 53,
+                "consensus" : "A landmark Sergio Leone spaghetti western masterpiece featuring a classic Morricone score.",
+                "userMeter" : 95,
+                "userRating" : 4.3,
+                "userReviews" : 64006
+        },
+        "metacritic" : 80,
+        "awards" : {
+                "wins" : 4,
+                "nominations" : 5,
+                "text" : "4 wins & 5 nominations."
+        },
+        "type" : "movie"
+}
+>db.movieDetails.find().sort({"year":1})
+
+{ "_id" : ObjectId("5e213ab40306babf9f4af5de"), "title" : "L.L. M.M. le Tsar et la Tsarine entrant dans l'église de l'Assomption [Moscou]", "year" : 1896, "rated" : null, "runtime" : 1, "countries" : [ "France" ], "genres" : [ "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt3187640", "rating" : 3.2, "votes" : 10 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af5e6"), "title" : "Monza, L.L. M.M. le Roi et la Reine d'Italie", "year" : 1896, "rated" : null, "runtime" : 1, "countries" : [ "France" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt1672812", "rating" : 5.1, "votes" : 54 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af8e5"), "title" : "Lick Observatory, Mt. Hamilton, Cal.", "year" : 1897, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : "James H. White", "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0218397", "rating" : 3.3, "votes" : 53 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4afafe"), "title" : "Mr. C.N. Morton", "year" : 1897, "rated" : null, "runtime" : null, "countries" : [ "UK" ], "genres" : [ "Short" ], "director" : null, "writers" : [ ], "actors" : [ "C.N. Morton" ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0213897", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af4a3"), "title" : "Mr. B.F. Keith", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Short" ], "director" : null, "writers" : [ ], "actors" : [ "Benjamin Franklin Keith" ], "plot" : "\"An excellent portrait picture of the well-known proprietor of the vaudeville theatres in Boston, New York, Providence and Philadelphia.\"", "poster" : null, "imdb" : { "id" : "tt0240740", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af5e4"), "title" : "Départ en gondole de LL. MM.", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "France" ], "genres" : [ "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt2478984", "rating" : 4.7, "votes" : 29 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af645"), "title" : "Advance Guard, Return of N.J. Troops", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ ], "genres" : [ "Documentary", "Short" ], "director" : "James H. White", "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0240322", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af680"), "title" : "N.L. Farnum Post, G.A.R.", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : "\"One of the best-known G.A.R. posts, as seen passing Madison Square on Fifth Avenue, on the occasion of the Decoration Day Parade.\"", "poster" : null, "imdb" : { "id" : "tt0232150", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af6aa"), "title" : "A Sussex Ox Wagon", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "UK" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt2151894", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af6fb"), "title" : "M.H. Pope Leo in a Chair", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "USA", "UK" ], "genres" : [ "Documentary", "Short" ], "director" : "William K.L. Dickson", "writers" : [ ], "actors" : [ "Leo XIII" ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0240695", "rating" : 6.4, "votes" : 12 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af89d"), "title" : "Louisville Commandery, Louisville, Ky.", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : "\"As seen in the grand parade of the triennial conclave of 1898.\"", "poster" : null, "imdb" : { "id" : "tt0240691", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af8e9"), "title" : "Salt Lake City Company of Rocky Mt. Riders", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0237689", "rating" : 6.3, "votes" : 6 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af919"), "title" : "Irish Mail, L. & N.W. Railway, Taking Up Water at Full Speed", "year" : 1898, "rated" : null, "runtime" : null, "countries" : [ "UK" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0345441", "rating" : 5, "votes" : 5 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af5e5"), "title" : "Cortège de gymnastique devant LL. MM.", "year" : 1899, "rated" : null, "runtime" : 1, "countries" : [ "France" ], "genres" : [ "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt1982648", "rating" : 4.8, "votes" : 33 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af730"), "title" : "The D.T.'s; or, The Horrors of Drink", "year" : 1899, "rated" : null, "runtime" : null, "countries" : [ "UK" ], "genres" : [ "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt2017605", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af8ea"), "title" : "Under the Shadow of Mt. Stephen, Passing Field's Station in the Rocky Mountains", "year" : 1899, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : "\"Passing Field's Station, Rocky Mountains. Panoramic view.\"", "poster" : null, "imdb" : { "id" : "tt0262860", "rating" : 7.2, "votes" : 5 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4afb9a"), "title" : "M.B. Curtis", "year" : 1899, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ "M.B. Curtis" ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0244049", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af63d"), "title" : "Burning of the Standard Oil Co.'s Tanks, Bayonne, N.J.", "year" : 1900, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt0299612", "rating" : 4, "votes" : 40 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af643"), "title" : "Circular Panorama of Atlantic City, N.J.", "year" : 1901, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : "James H. White", "writers" : [ ], "actors" : [ ], "plot" : "The camera was placed with the lens pointed toward the famous board walk in Atlantic City. During the exposure of the film the camera is slowly revolved from left to right, taking in the ...", "poster" : null, "imdb" : { "id" : "tt0359079", "rating" : 5.8, "votes" : 5 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af646"), "title" : "Ice-Boat Racing at Redbank, N.J.", "year" : 1901, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : null, "writers" : [ ], "actors" : [ ], "plot" : "An American flag acts as a stake in the race, and is placed in the center of the ice. The yachts with their great white sails are seen running toward and rounding the stake. They go through...", "poster" : null, "imdb" : { "id" : "tt0347227", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+Type "it" for more
+
+Q. List the documents sorted in descending order of the year.
+
+> db.movieDetails.find().sort({"year":-1})
+
+
+{ "_id" : ObjectId("5e213ab40306babf9f4af930"), "title" : "QQ Speed", "year" : 2018, "rated" : null, "runtime" : null, "countries" : [ "China" ], "genres" : [ "Animation" ], "director" : "John Eng", "writers" : [ "Bob Bendetson", "Art Everett" ], "actors" : [ "Kat Graham" ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt4940436", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af499"), "title" : "Ég Man Þig", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "Iceland" ], "genres" : [ "Thriller" ], "director" : "Óskar Thór Axelsson", "writers" : [ "Óskar Thór Axelsson", "Ottó Geir Borg" ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt4966532", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af576"), "title" : "The Duke: Based on the Memoir 'I'm the Duke' by J.P. Duke", "year" : 2016, "rated" : null, "runtime" : 21, "countries" : [ "USA" ], "genres" : [ "Short", "Comedy", "Drama" ], "director" : "Max Barbakow", "writers" : [ "Max Barbakow", "Derek J. Pastuszek", "Derek J. Pastuszek", "Andy Siara", "Andy Siara" ], "actors" : [ "LaMonica Garrett", "Zoë Worth", "Leslie Thurston", "Jeff Marlow" ], "plot" : "Mired in a concussed haze, an ex-NFLer struggles to reconcile dreams of a comeback with impending fatherhood during Super Bowl Sunday.", "poster" : null, "imdb" : { "id" : "tt4452996", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af5df"), "title" : "Untitled J.J. Abrams/Chris Alender Sci-Fi Project", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Sci-Fi" ], "director" : "Christopher Alender, Christopher Alender", "writers" : [ "Justin Doble", "Justin Doble" ], "actors" : [ ], "plot" : "Plot kept under wraps.", "poster" : null, "imdb" : { "id" : "tt4267492", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af5e9"), "title" : "Elf ll", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "Costa Rica" ], "genres" : [ "Comedy" ], "director" : null, "writers" : [ "Michael Alien Sabulsky" ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt4955734", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af61e"), "title" : "MF", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ ], "director" : "Robert Schwartzman", "writers" : [ "Benjamin Font", "Robert Schwartzman" ], "actors" : [ ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt4562728", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af649"), "title" : "Que Pena Tu Vida Mx", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "Mexico" ], "genres" : [ "Comedy" ], "director" : "Luis Eduardo Reyes", "writers" : [ "Nicolas Lopez", "Angel Pulido", "Luis Eduardo Reyes", "Valentín Trujillo hijo" ], "actors" : [ "Pamela Almanza", "Arturo Barba", "Rosa María Bianchi", "Alejandro Calva" ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt5226378", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af745"), "title" : "2 GB Ki Life", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "India" ], "genres" : [ "Drama" ], "director" : "Saurabh Varma", "writers" : [ ], "actors" : [ ], "plot" : "The film is highlights the story of a young man and his rise and fall. There was a time when world worked on KB's and then MB's, in today's world even 2 GB seems less to the youth of today....", "poster" : null, "imdb" : { "id" : "tt4367634", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4afb5a"), "title" : "JL Ranch", "year" : 2016, "rated" : null, "runtime" : null, "countries" : [ "USA" ], "genres" : [ "Drama" ], "director" : "Charles Robert Carner", "writers" : [ ], "actors" : [ "Kevin Lingle" ], "plot" : null, "poster" : null, "imdb" : { "id" : "tt5321174", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af2d3"), "title" : "Slow West", "year" : 2015, "rated" : "R", "runtime" : 84, "countries" : [ "UK", "New Zealand" ], "genres" : [ "Action", "Thriller", "Western" ], "director" : "John Maclean", "writers" : [ "John Maclean" ], "actors" : [ "Kodi Smit-McPhee", "Michael Fassbender", "Ben Mendelsohn", "Aorere Paki" ], "plot" : "A young Scottish man travels across America in pursuit of the woman he loves, attracting the attention of an outlaw who is willing to serve as a guide.", "poster" : "http://ia.media-imdb.com/images/M/MV5BNTYxNDA5ODk5NF5BMl5BanBnXkFtZTgwNzMwMzIwNTE@._V1_SX300.jpg", "imdb" : { "id" : "tt3205376", "rating" : 7, "votes" : 19101 }, "tomato" : { "meter" : 92, "image" : "certified", "rating" : 7.5, "reviews" : 115, "fresh" : 106, "consensus" : "Slow West serves as an impressive calling card for first-time writer-director John M. Maclean -- and offers an inventive treat for fans of the Western.", "userMeter" : 75, "userRating" : 3.7, "userReviews" : 9850 }, "metacritic" : 72, "awards" : { "wins" : 2, "nominations" : 9, "text" : "2 wins & 9 nominations." }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af384"), "title" : "Bound to Vengeance", "year" : 2015, "rated" : "NOT RATED", "runtime" : 93, "countries" : [ "USA" ], "genres" : [ "Horror", "Thriller" ], "director" : "José Manuel Cravioto", "writers" : [ "Rock Shaink Jr.", "Keith Kjornes", "Rock Shaink Jr." ], "actors" : [ "Richard Tyson", "Amy Okuda", "Tina Ivlev", "Bianca Malinowski" ], "plot" : "A young girl, chained in the basement of a sexual predator, escapes and turns the tables on her captor.", "poster" : "http://ia.media-imdb.com/images/M/MV5BMTc4MzM3MjgxM15BMl5BanBnXkFtZTgwMjIyNTA4NTE@._V1_SX300.jpg", "imdb" : { "id" : "tt1230213", "rating" : 5.7, "votes" : 2195 }, "tomato" : null, "metacritic" : 27, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af385"), "title" : "Bound", "year" : 2015, "rated" : "UNRATED", "runtime" : 91, "countries" : [ "USA" ], "genres" : [ "Drama", "Thriller" ], "director" : "Jared Cohn", "writers" : [ "Jared Cohn", "Delondra Williams" ], "actors" : [ "Charisma Carpenter", "Bryce Draper", "Morgan Obenreder", "Michael Monks" ], "plot" : "The daughter of a wealthy real estate broker falls in love with a younger man, who introduces her to B&D and S&M. Using her newly awakened sexual prowess, she finally takes charge of her own life.", "poster" : "http://ia.media-imdb.com/images/M/MV5BNzU0MDUzNTUyOF5BMl5BanBnXkFtZTgwODg1MjM4MzE@._V1_SX300.jpg", "imdb" : { "id" : "tt4145324", "rating" : 3.4, "votes" : 1147 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af3a3"), "title" : "Woman in Gold", "year" : 2015, "rated" : "PG-13", "runtime" : 109, "countries" : [ "UK" ], "genres" : [ "Drama" ], "director" : "Simon Curtis", "writers" : [ "Alexi Kaye Campbell", "E. Randol Schoenberg", "Maria Altmann" ], "actors" : [ "Helen Mirren", "Ryan Reynolds", "Daniel Brühl", "Katie Holmes" ], "plot" : "Maria Altmann, an octogenarian Jewish refugee, takes on the Austrian government to recover artwork she believes rightfully belongs to her family.", "poster" : "http://ia.media-imdb.com/images/M/MV5BMTExMTUxNDQ5MjdeQTJeQWpwZ15BbWU4MDk4NTgxMzQx._V1_SX300.jpg", "imdb" : { "id" : "tt2404425", "rating" : 7.3, "votes" : 25527 }, "tomato" : { "meter" : 54, "image" : "rotten", "rating" : 6, "reviews" : 134, "fresh" : 72, "consensus" : "Woman in Gold benefits from its talented leads, but strong work from Helen Mirren and Ryan Reynolds isn't enough to overpower a disappointingly dull treatment of a fascinating true story.", "userMeter" : 80, "userRating" : 4, "userReviews" : 17009 }, "metacritic" : 51, "awards" : { "wins" : 0, "nominations" : 1, "text" : "1 nomination." }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af3f8"), "title" : "Jurassic World", "year" : 2015, "rated" : "PG-13", "runtime" : 124, "countries" : [ "USA" ], "genres" : [ "Action", "Adventure", "Sci-Fi" ], "director" : "Colin Trevorrow", "writers" : [ "Rick Jaffa", "Amanda Silver", "Colin Trevorrow", "Derek Connolly", "Rick Jaffa", "Amanda Silver", "Michael Crichton" ], "actors" : [ "Chris Pratt", "Bryce Dallas Howard", "Irrfan Khan", "Vincent D'Onofrio" ], "plot" : "A new theme park is built on the original site of Jurassic Park. Everything is going well until the park's newest attraction--a genetically modified giant stealth killing machine--escapes containment and goes on a killing spree.", "poster" : "http://ia.media-imdb.com/images/M/MV5BMTQ5MTE0MTk3Nl5BMl5BanBnXkFtZTgwMjczMzk2NTE@._V1_SX300.jpg", "imdb" : { "id" : "tt0369610", "rating" : 7.1, "votes" : 332258 }, "tomato" : { "meter" : 71, "image" : "fresh", "rating" : 6.7, "reviews" : 278, "fresh" : 198, "consensus" : "Jurassic World can't match the original for sheer inventiveness and impact, but it works in its own right as an entertaining -- and visually dazzling -- popcorn thriller.", "userMeter" : 79, "userRating" : 3.9, "userReviews" : 209324 }, "metacritic" : 59, "awards" : { "wins" : 1, "nominations" : 10, "text" : "1 win & 10 nominations." }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af406"), "title" : "Run All Night", "year" : 2015, "rated" : "R", "runtime" : 114, "countries" : [ "USA" ], "genres" : [ "Action", "Crime", "Drama" ], "director" : "Jaume Collet-Serra", "writers" : [ "Brad Ingelsby" ], "actors" : [ "Liam Neeson", "Ed Harris", "Joel Kinnaman", "Boyd Holbrook" ], "plot" : "Mobster and hit man Jimmy Conlon has one night to figure out where his loyalties lie: with his estranged son, Mike, whose life is in danger, or his longtime best friend, mob boss Shawn Maguire, who wants Mike to pay for the death of his own son.", "poster" : "http://ia.media-imdb.com/images/M/MV5BMTU2ODI3ODEyOV5BMl5BanBnXkFtZTgwMTM3NTQzNDE@._V1_SX300.jpg", "imdb" : { "id" : "tt2199571", "rating" : 6.6, "votes" : 63597 }, "tomato" : { "meter" : 61, "image" : "fresh", "rating" : 5.8, "reviews" : 162, "fresh" : 99, "consensus" : "Liam Neeson is in typically fine form, but Run All Night suffers from a convoluted plot and workmanlike execution.", "userMeter" : 58, "userRating" : 3.4, "userReviews" : 20203 }, "metacritic" : 59, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af429"), "title" : "Being AP", "year" : 2015, "rated" : null, "runtime" : 103, "countries" : [ "UK" ], "genres" : [ "Documentary" ], "director" : "Anthony Wonke", "writers" : [ ], "actors" : [ "Tony McCoy" ], "plot" : "Undoubtedly one of Northern Ireland's greatest ever sportsmen, the story of AP's final season is a fascinating mix of sacrifice, doubt, decisions, triumphs and failures, injury and ...", "poster" : "http://ia.media-imdb.com/images/M/MV5BMTU2NjUwNjEwOV5BMl5BanBnXkFtZTgwMDMzNjIzNzE@._V1_SX300.jpg", "imdb" : { "id" : "tt3916100", "rating" : 6.7, "votes" : 58 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af440"), "title" : "BG's Dirty 30: Cruise to Ensenada", "year" : 2015, "rated" : null, "runtime" : 30, "countries" : [ "USA" ], "genres" : [ "Documentary", "Short" ], "director" : "Raymond J. Roman", "writers" : [ ], "actors" : [ ], "plot" : null, "poster" : "http://ia.media-imdb.com/images/M/MV5BODIwNDIwNzc0Ml5BMl5BanBnXkFtZTgwNjcxODQwNDE@._V1_SX300.jpg", "imdb" : { "id" : "tt4352324", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af457"), "title" : "Ab Tak Chhappan 2", "year" : 2015, "rated" : null, "runtime" : null, "countries" : [ "India" ], "genres" : [ "Action", "Crime" ], "director" : "Ejaz Gulab", "writers" : [ "Nilesh Girkar" ], "actors" : [ "Mohan Agashe", "Bobby Bedi", "Vikram Gokhale", "Aniruddh Harip" ], "plot" : "Home Minister Janardhan Jagirdarand chief Minister Anna Saheb are much concerned over the criminal activities of underworld dons Rawal and Rauf Lala. Rawal is operating from Bangkok while ...", "poster" : "http://ia.media-imdb.com/images/M/MV5BOTU0OWM3ODktMzZmOC00MTJjLWE2ZTktYzA1ZjE4OTM4ZDE4XkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300.jpg", "imdb" : { "id" : "tt2202086", "rating" : 5.8, "votes" : 585 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af45e"), "title" : "BK 2 LA", "year" : 2015, "rated" : null, "runtime" : 9, "countries" : [ "USA" ], "genres" : [ "Short", "Drama" ], "director" : "Julian Wolff", "writers" : [ "Julian Wolff" ], "actors" : [ "Aaron Lee Wright", "Celine Held", "Kesav Wable", "Augustus Britton" ], "plot" : "Juan is leaving for LA in the morning. But not before he and Pardiv say goodbye, one way or the other.", "poster" : "http://ia.media-imdb.com/images/M/MV5BMTU1NzcxNzIyMl5BMl5BanBnXkFtZTgwNjU5MTczNTE@._V1_SX300.jpg", "imdb" : { "id" : "tt4601962", "rating" : null, "votes" : null }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+{ "_id" : ObjectId("5e213ab40306babf9f4af463"), "title" : "S.O.S.: Mulheres ao Mar 2", "year" : 2015, "rated" : null, "runtime" : null, "countries" : [ "Brazil" ], "genres" : [ "Comedy" ], "director" : "Cris D'Amato", "writers" : [ "Sylvio Gonçalves", "Bruno Garotti" ], "actors" : [ "Giovanna Antonelli", "Reynaldo Gianecchini", "Fabiula Nascimento", "Thalita Carauta" ], "plot" : "A Brazilian woman's comedy inside a cruze.", "poster" : null, "imdb" : { "id" : "tt4358196", "rating" : 6, "votes" : 71 }, "awards" : { "wins" : 0, "nominations" : 0, "text" : "" }, "type" : "movie" }
+Type "it" for more
+>> db.movieDetails.find({},{"_id":0,"title":1,"year":1})
+{ "title" : "Once Upon a Time in the West", "year" : 1968 }
+{ "title" : "A Million Ways to Die in the West", "year" : 2014 }
+{ "title" : "Wild Wild West", "year" : 1999 }
+{ "title" : "West Side Story", "year" : 1961 }
+{ "title" : "Slow West", "year" : 2015 }
+{ "title" : "An American Tail: Fievel Goes West", "year" : 1991 }
+{ "title" : "Red Rock West", "year" : 1993 }
+{ "title" : "How the West Was Won", "year" : 1962 }
+{ "title" : "Journey to the West", "year" : 2013 }
+{ "title" : "West of Memphis", "year" : 2012 }
+{ "title" : "Star Wars: Episode IV - A New Hope", "year" : 1977 }
+{ "title" : "Star Wars: Episode V - The Empire Strikes Back", "year" : 1980 }
+{ "title" : "Star Wars: Episode VI - Return of the Jedi", "year" : 1983 }
+{ "title" : "Star Wars: Episode I - The Phantom Menace", "year" : 1999 }
+{ "title" : "Star Wars: Episode III - Revenge of the Sith", "year" : 2005 }
+{ "title" : "Star Trek", "year" : 2009 }
+{ "title" : "Star Wars: Episode II - Attack of the Clones", "year" : 2002 }
+{ "title" : "Star Trek Into Darkness", "year" : 2013 }
+{ "title" : "Star Trek: First Contact", "year" : 1996 }
+{ "title" : "Star Trek II: The Wrath of Khan", "year" : 1982 }
+Type "it" for more
+
+
+> db.movieDetails.find({"year":{$lt:2000}},{"_id":0,"title":1,"year":1}).sort({"year":-1})
+{ "title" : "Wild Wild West", "year" : 1999 }
+{ "title" : "Star Wars: Episode I - The Phantom Menace", "year" : 1999 }
+{ "title" : "Office Space", "year" : 1999 }
+{ "title" : "Muppets from Space", "year" : 1999 }
+{ "title" : "From Dusk Till Dawn 2: Texas Blood Money", "year" : 1999 }
+{ "title" : "Happy, Texas", "year" : 1999 }
+{ "title" : "Herod's Law", "year" : 1999 }
+{ "title" : "Romance", "year" : 1999 }
+{ "title" : "Stuart Little", "year" : 1999 }
+{ "title" : "Big Daddy", "year" : 1999 }
+{ "title" : "Girl, Interrupted", "year" : 1999 }
+{ "title" : "The World Is Not Enough", "year" : 1999 }
+{ "title" : "Toy Story 2", "year" : 1999 }
+{ "title" : "The Straight Story", "year" : 1999 }
+{ "title" : "Aa Ab Laut Chalen", "year" : 1999 }
+{ "title" : "Fink fährt ab", "year" : 1999 }
+{ "title" : "Pettson & Findus - Katten och gubbens år", "year" : 1999 }
+{ "title" : "Ea Sola - Sécheresse et pluie", "year" : 1999 }
+{ "title" : "Pia Carrot e Yokoso! 2 DX", "year" : 1999 }
+{ "title" : "Mr. Death: The Rise and Fall of Fred A. Leuchter, Jr.", "year" : 1999 }
+
+Q. List only meter values for value>=92
+
+ db.movieDetails.find({"tomato.meter":{$gte:92}},{"tomato.meter":1}).pretty()
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2cf"),
+        "tomato" : {
+                "meter" : 98
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2d3"),
+        "tomato" : {
+                "meter" : 92
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2d7"),
+        "tomato" : {
+                "meter" : 93
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2d8"),
+        "tomato" : {
+                "meter" : 95
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2d9"),
+        "tomato" : {
+                "meter" : 94
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2da"),
+        "tomato" : {
+                "meter" : 94
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2de"),
+        "tomato" : {
+                "meter" : 95
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2e1"),
+        "tomato" : {
+                "meter" : 93
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2e3"),
+        "tomato" : {
+                "meter" : 99
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2e5"),
+        "tomato" : {
+                "meter" : 92
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2ed"),
+        "tomato" : {
+                "meter" : 96
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2f8"),
+        "tomato" : {
+                "meter" : 92
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2f9"),
+        "tomato" : {
+                "meter" : 100
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af2fa"),
+        "tomato" : {
+                "meter" : 93
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af301"),
+        "tomato" : {
+                "meter" : 94
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af303"),
+        "tomato" : {
+                "meter" : 96
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af304"),
+        "tomato" : {
+                "meter" : 95
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af30c"),
+        "tomato" : {
+                "meter" : 92
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af30f"),
+        "tomato" : {
+                "meter" : 95
+        }
+}
+{
+        "_id" : ObjectId("5e213ab40306babf9f4af311"),
+        "tomato" : {
+                "meter" : 98
+        }
+}
+Type "it" for more
+
+>>  db.movieDetails.aggregate({$group:{_id:"$year","runs":{$sum:"$runtime"}}})
+{ "_id" : 1932, "runs" : 99 }
+{ "_id" : 1926, "runs" : 78 }
+{ "_id" : 1917, "runs" : 0 }
+{ "_id" : 1920, "runs" : 67 }
+{ "_id" : 1933, "runs" : 201 }
+{ "_id" : 1939, "runs" : 315 }
+{ "_id" : 1925, "runs" : 157 }
+{ "_id" : 1943, "runs" : 246 }
+{ "_id" : 1945, "runs" : 176 }
+{ "_id" : 1935, "runs" : 98 }
+{ "_id" : 1916, "runs" : 10 }
+{ "_id" : 1899, "runs" : 1 }
+{ "_id" : 1896, "runs" : 2 }
+{ "_id" : 1924, "runs" : 45 }
+{ "_id" : 1931, "runs" : 169 }
+{ "_id" : 1929, "runs" : 19 }
+{ "_id" : 1960, "runs" : 457 }
+{ "_id" : 1912, "runs" : 8 }
+{ "_id" : 1953, "runs" : 314 }
+{ "_id" : 1973, "runs" : 1072 }
+Type "it" for more
+
+> db.movieDetails.find({"awards.win":{$lt:5}},{"tomato.rating":{$gte:8}},{"_id":0,"title":1})
+
+
+  db.movieDetails.aggregate([{$group:{_id:"$year","runs":{$sum:"$runtime"}}},{$sort:{"_id":1}}])
+{ "_id" : 1896, "runs" : 2 }
+{ "_id" : 1897, "runs" : 0 }
+{ "_id" : 1898, "runs" : 0 }
+{ "_id" : 1899, "runs" : 1 }
+{ "_id" : 1900, "runs" : 0 }
+{ "_id" : 1901, "runs" : 0 }
+{ "_id" : 1902, "runs" : 0 }
+{ "_id" : 1903, "runs" : 1 }
+{ "_id" : 1904, "runs" : 6 }
+{ "_id" : 1905, "runs" : 0 }
+{ "_id" : 1906, "runs" : 1 }
+{ "_id" : 1908, "runs" : 0 }
+{ "_id" : 1909, "runs" : 0 }
+{ "_id" : 1910, "runs" : 13 }
+{ "_id" : 1911, "runs" : 0 }
+{ "_id" : 1912, "runs" : 8 }
+{ "_id" : 1914, "runs" : 141 }
+{ "_id" : 1915, "runs" : 50 }
+{ "_id" : 1916, "runs" : 10 }
+{ "_id" : 1917, "runs" : 0 }
+Type "it" for more
+
+Max runtime on the top
+db.movieDetails.aggregate([{$group:{_id:"$year","runs":{$sum:"$runtime"}}},{$sort:{"runs":-1}}])
+{ "_id" : 2013, "runs" : 7481 }
+{ "_id" : 2014, "runs" : 7004 }
+{ "_id" : 2007, "runs" : 6973 }
+{ "_id" : 2011, "runs" : 6540 }
+{ "_id" : 2010, "runs" : 6411 }
+{ "_id" : 2002, "runs" : 5999 }
+{ "_id" : 2012, "runs" : 5844 }
+{ "_id" : 2006, "runs" : 5519 }
+{ "_id" : 2009, "runs" : 5515 }
+{ "_id" : 2008, "runs" : 4941 }
+{ "_id" : 2005, "runs" : 4763 }
+{ "_id" : 2004, "runs" : 4761 }
+{ "_id" : 2003, "runs" : 4467 }
+{ "_id" : 2000, "runs" : 4192 }
+{ "_id" : 1999, "runs" : 3885 }
+{ "_id" : 2001, "runs" : 3826 }
+{ "_id" : 2015, "runs" : 3583 }
+{ "_id" : 1993, "runs" : 2939 }
+{ "_id" : 1998, "runs" : 2816 }
+{ "_id" : 1986, "runs" : 2706 }
+
+
+LOAD ANOTHER DATASET("EMOJI")
+
+> use emoticons
+switched to db emoticons
+> load("emojis.json")
+true
+> show dbs
+admin      0.000GB
+config     0.000GB
+emoticons  0.000GB
+local      0.000GB
+movies     0.000GB
+video      0.001GB
+> show collections
+emoji
+
+> use usa
+switched to db usa
+> load("cities.json")
+true
+> show dbs
+admin      0.000GB
+config     0.000GB
+emoticons  0.000GB
+local      0.000GB
+movies     0.000GB
+usa        0.000GB
+video      0.001GB
+> show collections
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
